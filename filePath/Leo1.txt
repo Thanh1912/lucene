@@ -1,0 +1,5 @@
+Bản chất hạch toán kinh doanh trong TMDV 1.Bản chất
+Hạch toán KD vừa là phạm trù kinh tế vừa là hệ thống các phương pháp tính toán kết quả và hiệu quả KD ở các DN
+và được xem như tổng thể các phương pháp kinh tế trong quản lý
+Trao đổi sản phẩm giả định phải có những quan hệ giữa các đơn vị ấy.
+GitHub brings together the world's largest community of developers to discover,
