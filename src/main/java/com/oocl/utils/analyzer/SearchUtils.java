@@ -1,4 +1,4 @@
-package com.oocl.utils;
+package com.oocl.utils.analyzer;
 
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
@@ -8,23 +8,22 @@ import org.apache.lucene.search.TopDocs;
 public class SearchUtils {
 
 	/**
-	 * 通过Query来进行打搜索
-	 * 
+	 * Search by Query
+	 *
 	 * @param query
-	 *            ： query对象
+	 * : query object
 	 * @param indexPath
-	 *            ： 索引库地址
+	 * : Index Library Address
 	 * @throws Exception
-	 *             ： 抛出异常
+	 * : Throw an exception
 	 */
 	public static TopDocs searchByQuery(Query query, IndexSearcher indexSearcher, String indexPath) throws Exception {
 		Filter filter = null;
 		TopDocs docs = indexSearcher.search(query, filter, 10000);
 		return docs;
 	}
-
 	/**
-	 * 通过Query来进行搜索，并且添加过滤器
+	 * Search by Query and add filters
 	 */
 	public static TopDocs searchByQuery(Query query, IndexSearcher indexSearcher, String indexPath, Filter filter)
 			throws Exception {

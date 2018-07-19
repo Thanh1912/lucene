@@ -1,4 +1,4 @@
-package com.oocl.utils;
+package com.oocl.utils.highlight;
 
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.highlight.Formatter;

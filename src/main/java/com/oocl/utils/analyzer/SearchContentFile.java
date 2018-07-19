@@ -1,26 +1,29 @@
-package com.oocl.utils;
+package com.oocl.utils.analyzer;
 
+import com.oocl.utils.ConstantValue;
+import com.oocl.utils.ModelResult;
+import com.oocl.utils.document.DocumentFile;
+import com.oocl.utils.document.FileDocumentUtil;
+import com.oocl.utils.highlight.HighlighterUtils;
+import com.sun.org.apache.xml.internal.serializer.Version;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.NumberTools;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.highlight.Highlighter;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SearchContentFile {
 
     // word breaker
-    public static Analyzer analyzer = new StandardAnalyzer();
+    public static Analyzer analyzer = new CJKAnalyzer();
 
-    public void search(String queryString, List<String> listPath) throws Exception {
+    private  HashMap<String, ModelResult> searchQuery(String queryString) throws Exception {
         // 1. Initialize IndexSearch
-        createIndexInfiles(listPath);
         IndexSearcher indexSearcher = new IndexSearcher(ConstantValue.INDEX_PATH);
         String[] fields = {"name", "content", "size"};
         // 2. Get Query by keyword
@@ -39,7 +42,7 @@ public class SearchContentFile {
         // 2. Get the highlighter
         Highlighter highlighter = HighlighterUtils.getHighlighter(query, ConstantValue.PER_TAG, ConstantValue.POST_TAG, 1000);
         // 3. Traverse docs print results
-        FileDocumentUtil.ergodicDocument(docs, highlighter, analyzer, indexSearcher, "content", 60);
+       return FileDocumentUtil.ergodicDocument(docs, highlighter, analyzer, indexSearcher, "content", 60);
     }
 
     private void createIndexInfiles(List<String> listPath) throws IOException {
@@ -55,6 +58,14 @@ public class SearchContentFile {
         });
         indexWriter.close();
         System.out.println("Successfully created index library");
+    }
+
+
+    public HashMap<String, ModelResult> searchContentOnAllFile(List<String> listPath, String pathIndex) throws Exception {
+        DocumentFile documentFile = new DocumentFile();
+        createIndexInfiles(listPath);
+        String contentQuery = documentFile.readFile(pathIndex);;
+        return searchQuery(contentQuery);
     }
 
 }
